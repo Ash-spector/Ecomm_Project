@@ -2,8 +2,9 @@ using Ecomm_Project.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Ecomm_Project.Controllers
+namespace Ecomm_Project.Areas.Customer.Views
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         public IActionResult Index()
