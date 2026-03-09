@@ -1,0 +1,62 @@
+﻿using Ecomm_Project.DataAccess.Data;
+using Ecomm_Project.DataAccess.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Text;
+
+namespace Ecomm_Project.DataAccess.Repository
+{
+    public class Repository <T> : IRepository<T> where T : class
+    {
+        private readonly ApplicationDbContext _context;
+        internal DbSet <T> dbset;
+        public Repository (ApplicationDbContext context)
+        {
+            _context = context;
+            dbset = _context.Set<T>();
+        }
+
+        public void Add(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T FirstorDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Get(int id)
+        {
+
+            return dbset.Find(id);
+        }
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties  = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(T entity)
+        {
+           dbset.Remove(entity);
+        }
+
+        public void RemoveRange(IEnumerable<T> entites)
+        {
+            dbset.RemoveRange(entites);
+        }
+
+        public void Update(T entity)
+        {
+            dbset.Update(entity);
+        }
+    }
+}
