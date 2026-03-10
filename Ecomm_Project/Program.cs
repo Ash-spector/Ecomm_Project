@@ -1,4 +1,6 @@
 using Ecomm_Project.DataAccess.Data;
+using Ecomm_Project.DataAccess.Repository;
+using Ecomm_Project.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository> ();
+builder.Services.AddScoped<ICoverTypeRepository, ICoverTypeRepository>();
+// iske upr add krte hain 
+//iske niche middleware udhr code ni add krna 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
