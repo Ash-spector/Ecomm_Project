@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Ecomm_Project.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Ecomm_Project.DataAccess.Repository.IRepository
 {
-    internal interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
     }
 }

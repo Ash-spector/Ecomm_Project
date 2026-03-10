@@ -25,7 +25,18 @@ namespace Ecomm_Project.DataAccess.Repository
 
         public T FirstorDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbset;
+            if (filter != null)
+                query = query.Where(filter);
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.FirstOrDefault();
         }
 
         public T Get(int id)
@@ -36,7 +47,22 @@ namespace Ecomm_Project.DataAccess.Repository
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties  = null)
         {
-            throw new NotImplementedException();
+            // condition ho to itna hee code 
+            IQueryable<T> query = dbset;
+            if ( filter != null )
+                query = query.Where(filter);
+            if ( includeProperties !=null )   // Multiple table ke liye 
+            {
+                //sorting ke liye 
+                foreach (var includeprop in includeProperties.Split(new[] {',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeprop);
+                }
+                if ( orderBy != null )
+                    return orderBy(query).ToList();
+                return query.ToList();
+            }
         }
 
         public void Remove(int id)
