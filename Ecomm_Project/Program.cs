@@ -16,10 +16,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository> ();
-builder.Services.AddScoped<ICoverTypeRepository, ICoverTypeRepository>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository> ();
+//builder.Services.AddScoped<ICoverTypeRepository, ICoverTypeRepository>();
 // iske upr add krte hain 
 //iske niche middleware udhr code ni add krna 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

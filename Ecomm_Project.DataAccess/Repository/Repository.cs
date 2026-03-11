@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Ecomm_Project.DataAccess.Repository
 {
-    public class Repository <T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
-        internal DbSet <T> dbset;
-        public Repository (ApplicationDbContext context)
+        internal DbSet<T> dbset;
+        public Repository(ApplicationDbContext context)
         {
             _context = context;
             dbset = _context.Set<T>();
@@ -45,24 +45,26 @@ namespace Ecomm_Project.DataAccess.Repository
             return dbset.Find(id);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties  = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null,Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,string includeProperties = null)
         {
-            // condition ho to itna hee code 
             IQueryable<T> query = dbset;
-            if ( filter != null )
+
+            if (filter != null)
                 query = query.Where(filter);
-            if ( includeProperties !=null )   // Multiple table ke liye 
+
+            if (includeProperties != null)
             {
-                //sorting ke liye 
-                foreach (var includeprop in includeProperties.Split(new[] {',' },
-                    StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(
+                    new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(includeprop);
+                    query = query.Include(includeProp);
                 }
-                if ( orderBy != null )
-                    return orderBy(query).ToList();
-                return query.ToList();
             }
+
+            if (orderBy != null)
+                return orderBy(query).ToList();
+
+            return query.ToList();
         }
 
         public void Remove(int id)
@@ -72,7 +74,7 @@ namespace Ecomm_Project.DataAccess.Repository
 
         public void Remove(T entity)
         {
-           dbset.Remove(entity);
+            dbset.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entites)
