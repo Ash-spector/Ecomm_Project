@@ -1,0 +1,26 @@
+﻿@model Ecomm_Project.Models.Category
+@{
+	var title = Model.id != 0 ? "Edit Category" : "Create Category";
+	var saveupdate = Model.id != 0 ? "Update" : "Save"; 
+}
+<form method="post">
+	@if (Model.id!=0)
+		{
+			<Input type = "hidden" asp-for ="@Model.id"/>
+		}
+		<div class ="col-10""border-bottom">
+			<h2 class=" text-info">@title</h2>
+		</div> 
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class=" col-8">
+			<div class=" form-group row p-2 m-2">
+				<div class="col-4">
+					<label asp-for="Name"></label>
+				</div>
+				<div class=" col-8">
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class=" text-danger"></span>
+				</div>
+			</div>
+		</div>
+	</form>
