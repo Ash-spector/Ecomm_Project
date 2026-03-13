@@ -33,8 +33,47 @@ function loadDataTable() {
                     </div>
                     `;
                 },
+                "width": "30%"
             }
         ]
+
     });
+}
+function Delete(url) {
+
+    swal({
+        title: "Want to Delete Data ?",
+        text: "Delete this category?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    })
+        .then((willDelete) => {
+
+            if (willDelete) {
+
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            toastr.success(data.message);
+                            datatable.ajax.reload();
+
+                        } else {
+
+                            toastr.error(data.message);
+
+                        }
+
+                    }
+                });
+
+            }
+
+        });
 
 }

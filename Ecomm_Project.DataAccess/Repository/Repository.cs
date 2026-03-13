@@ -1,10 +1,7 @@
 ﻿using Ecomm_Project.DataAccess.Data;
 using Ecomm_Project.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ecomm_Project.DataAccess.Repository
 {
@@ -12,6 +9,7 @@ namespace Ecomm_Project.DataAccess.Repository
     {
         private readonly ApplicationDbContext _context;
         internal DbSet<T> dbset;
+
         public Repository(ApplicationDbContext context)
         {
             _context = context;
@@ -20,32 +18,35 @@ namespace Ecomm_Project.DataAccess.Repository
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            dbset.Add(entity);
         }
 
         public T FirstorDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
             IQueryable<T> query = dbset;
+
             if (filter != null)
                 query = query.Where(filter);
+
             if (includeProperties != null)
             {
-                foreach (var includeProp in includeProperties.Split(new[] { ',' },
-                    StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
             }
+
             return query.FirstOrDefault();
         }
 
         public T Get(int id)
         {
-
             return dbset.Find(id);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null,Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,string includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = null)
         {
             IQueryable<T> query = dbset;
 
@@ -54,8 +55,7 @@ namespace Ecomm_Project.DataAccess.Repository
 
             if (includeProperties != null)
             {
-                foreach (var includeProp in includeProperties.Split(
-                    new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
@@ -69,7 +69,11 @@ namespace Ecomm_Project.DataAccess.Repository
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            T entity = dbset.Find(id);
+            if (entity != null)
+            {
+                dbset.Remove(entity);
+            }
         }
 
         public void Remove(T entity)
@@ -77,9 +81,9 @@ namespace Ecomm_Project.DataAccess.Repository
             dbset.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entites)
+        public void RemoveRange(IEnumerable<T> entities)
         {
-            dbset.RemoveRange(entites);
+            dbset.RemoveRange(entities);
         }
 
         public void Update(T entity)
