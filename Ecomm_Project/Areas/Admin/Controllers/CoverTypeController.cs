@@ -20,9 +20,8 @@ namespace Ecomm_Project.Areas.Admin.Controllers
         {
             CoverType coverType = new CoverType();
 
-            if (id == null || id == 0)
+            if (id == null)
                 return View(coverType);
-
             coverType = _unitOfWork.CoverType.Get(id.GetValueOrDefault());
 
             if (coverType == null)
