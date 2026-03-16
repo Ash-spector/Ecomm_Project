@@ -1,5 +1,24 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿<div class=" row border p-2 m-2">
+	<div class=" col-9">
+		<h2 class=" text-primary">Cover Type</h2>
+	</div>
+	<div class=" col-3">
+		<a asp-action="Upsert" class="btn btn-info form-control">
+			<i class=" fas fa-solid fa-plus"></i>&nbsp; Add New Cover Type
+		</a>
+	</div>
+</div>
+<div class="container rounded border p-2 m-2">
+	<table id="tblData" class=" table table-bordered table-striped table-active">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+@section scripts
+{
+	<scrips src="_ValidationScriptsPartial"></scrips>
 }
