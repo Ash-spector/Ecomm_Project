@@ -17,14 +17,15 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Ecomm_Project.DataAccess\Ecomm_Project.DataAccess.csproj" />
-    <ProjectReference Include="..\Ecomm_Project.Models\Ecomm_Project.Models.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Ecomm_Project.DataAccess\Ecomm_Project.DataAccess.csproj" />
+		<ProjectReference Include="..\Ecomm_Project.Models\Ecomm_Project.Models.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Customer\Controllers\" />
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Areas\Customer\Controllers\" />
+		<Folder Include="Controllers\" />
+	</ItemGroup>
 
 </Project>
+	

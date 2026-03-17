@@ -1,8 +1,12 @@
 using Ecomm_Project.DataAccess.Data;
 using Ecomm_Project.DataAccess.Repository;
 using Ecomm_Project.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
