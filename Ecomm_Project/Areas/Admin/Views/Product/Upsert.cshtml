@@ -1,0 +1,24 @@
+﻿@model Ecomm_Project.Models.ViewModels.ProductVM
+@{
+	var title = Model.Product.Id != 0 ? "Edit Product" : " New Product";
+	var saveUpdate = Model.Product.Id != 0 ? "Update" : "Save";
+}
+<div class=" text-primary border-bottom">@title</div>
+<div class=" row">
+	<div class=" col-6">
+		<form method =" post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class=" text-danger">
+			</div> 
+			@if (Model.Product.Id!=0)
+				{
+					<InputType = "hidden" asp-for"@Model.Product.Id"/>
+				}
+				<div class = "form-group row p-2 m-2">
+					<label asp-for="Product.Title"></label>
+					<input asp-for="Product.Title" class=" form-control"/>
+					<span asp-validation-for="Product.Title" class=" text-danger"></span>
+				</div>
+
+			</form>
+	</div>
+</div>

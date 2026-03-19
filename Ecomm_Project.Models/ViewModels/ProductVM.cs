@@ -8,7 +8,7 @@ namespace Ecomm_Project.Models.ViewModels
     public  class ProductVM
     {
         public IEnumerable<SelectListItem> CategoryList { get; set; }
-        public IEnumerable<SelectListItem> CoverType { get; set; }
+        public IEnumerable<SelectListItem> CoverTypeList { get; set; }
         public Product Product { get; set; }
     }
 
