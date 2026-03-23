@@ -9,6 +9,8 @@ function loadDataTable() {
         "ajax": {
             "url": "/Admin/Product/GetAll"
         },
+        "lengthMenu": [[2, 4, 6, 8, 10], [2, 4, 6, 8, 10]],
+        "pageLength": 2, 
         "columns": [
             { "data": "title", "width": "15%" },
             { "data": "description", "width": "20%" },
