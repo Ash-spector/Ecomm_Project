@@ -10,10 +10,14 @@ namespace Ecomm_Project.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
-        public ProductController(IUnitOfWork unitofwork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController (IUnitOfWork unitwork,
+            IWebHostEnvironment webHostEnvironment)
         {
-            _unitofwork = unitofwork;
+            _unitofwork = unitwork;
+            _webHostEnvironment = webHostEnvironment;
         }
+       
         public IActionResult Index()
         {
             return View();
@@ -43,6 +47,8 @@ namespace Ecomm_Project.Areas.Admin.Controllers
 
             return View(productVM);
         }
+        [HttpPost]
+       
         #region Api's
         [HttpGet]
         public IActionResult GetAll()
