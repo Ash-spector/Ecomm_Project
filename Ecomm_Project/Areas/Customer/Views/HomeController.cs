@@ -19,6 +19,10 @@ namespace Ecomm_Project.Areas.Customer.Views
             var productList = _unitofwork.Product.GetAll();
             return View(productList);
         }
+        public IActionResult Details()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
