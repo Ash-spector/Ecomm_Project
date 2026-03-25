@@ -1,68 +1,62 @@
-﻿var datatable;
+﻿var dataTable;
 
 $(document).ready(function () {
     loadDataTable();
 });
+
 function loadDataTable() {
-    datatable = $('#tblData').DataTable({
+    dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Admin/Category/GetAll"
+            "url": "/Admin/Product/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "70%" },
+            { "data": "title", "width": "15%" },
+            { "data": "description", "width": "20%" },
+            { "data": "author", "width": "15%" },
+            { "data": "isbn", "width": "15%" },
+            { "data": "listPrice", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                     <div class="text-center">
-                        <a href="/Admin/Category/Upsert/${data}" class="btn btn-info">
+                        <a href="/Admin/Product/Upsert/${data}" class="btn btn-info">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger" onclick="Delete('/Admin/Category/Delete/${data}')">
-                            <i class="fas fa-trash-alt"></i>
+                        <a onclick=Delete("/Admin/Product/Delete/${data}") class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
                         </a>
-                    </div>
-                    `;
+                    </div>`;
                 },
-                "width": "30%"
+                "width": "15%"
             }
         ]
     });
 }
+
 function Delete(url) {
-
-    swal({
-        title: "Want to Delete Data ?",
-        text: "Delete this category?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    })
-        .then((willDelete) => {
-
-            if (willDelete) {
-
-                $.ajax({
-                    url: url,
-                    type: "DELETE",
-
-                    success: function (data) {
-
-                        if (data.success) {
-
-                            toastr.success(data.message);
-                            datatable.ajax.reload();
-
-                        } else {
-
-                            toastr.error(data.message);
-                        }
-
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
                     }
-                });
-
-            }
-
-        });
-
+                }
+            });
+        }
+    });
 }

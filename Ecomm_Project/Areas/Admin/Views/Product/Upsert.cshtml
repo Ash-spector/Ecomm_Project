@@ -47,6 +47,11 @@
                 <input asp-for="Product.ListPrice" class="form-control" />
                 <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
             </div>
+            <div class="form-group p-2 m-2">
+                <label asp-for="Product.Price"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
 
             <div class="form-group p-2 m-2">
                 <label asp-for="Product.Price50"></label>
@@ -62,8 +67,7 @@
 
             <div class="form-group p-2 m-2">
                 <label asp-for="Product.ImageUrl"></label>
-                <input type="file" name="file" id="uploadImage" class="form-control" />
-                <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+                <input type="file" name="files" id="uploadImage" class="form-control" />
             </div>
 
             <div class="form-group p-2 m-2">
@@ -85,13 +89,13 @@
             <div class="form-group p-2 m-2">
                 @if (Model.Product.Id != 0)
                 {
-                    <partial name="_EditAndBackToList" />
+                    <partial name="_EditAndBackToListButtons" />
                 }
                 else
                 {
                     <div class="row">
                         <div class="col">
-                            <button type="submit" onclick="return validateData()" class="btn btn-info form-control">
+                            <button type="submit" class="btn btn-info form-control">
                                 Save
                             </button>
                         </div>
@@ -108,28 +112,26 @@
     </div>
 
     <div class="col-6">
-        <p>Image Display</p>
+        @if (Model.Product.ImageUrl != null)
+        {
+            <img src="@Model.Product.ImageUrl" style="width:100%; border-radius:10px;" />
+        }
+        else
+        {
+            <p>No image uploaded yet.</p>
+        }
     </div>
 </div>
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
-
     <script src="https://cdn.tiny.cloud/1/a6t77woi7q9asc5hp58tewin8p7tmvz87ttz7cpsgq7je930/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        function validateData() {
-        if (document.getElementById("uploadImage").value === "") {
-        swal("Error", "Please select an image!", "error");
-        return false;
-        }
-        return true;
-        }
-
         tinymce.init({
         selector: "textarea",
         plugins: "lists link image",
-        menubar : "file edit format"
+        menubar: "file edit format"
         });
     </script>
 }

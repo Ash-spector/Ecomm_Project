@@ -9,8 +9,8 @@ function loadDataTable() {
         "ajax": {
             "url": "/Admin/Product/GetAll"
         },
-        "lengthMenu": [[2, 4, 6, 8, 10], [2, 4, 6, 8, 10]],
-        "pageLength": 2, 
+        //"lengthMenu": [[2, 4, 6, 8, 10], [2, 4, 6, 8, 10]],
+        //"pageLength": 2, 
         "columns": [
             { "data": "title", "width": "15%" },
             { "data": "description", "width": "20%" },
@@ -25,6 +25,10 @@ function loadDataTable() {
                         <a href="/Admin/Product/Upsert/${data}" class="btn btn-info">
                             <i class="fas fa-edit"></i>
                         </a>
+                        <a onclick=Delete("/Admin/Product/Delete/${data}") class="btn btn-danger mx-2">
+                            <i class="fas fa-trash-alt"></i> 
+                        </a>
+
                     </div>
                     `;
                 }
@@ -34,5 +38,27 @@ function loadDataTable() {
 }
 
 function Delete(url) {
-    alert(url);
+    swal({
+        title: "Want to Delete Data ?",
+        text: "Delete this Covertype?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    success: function (data) {
+                        if (data.success) {
+                            toastr.success(data.message);
+                            datatable.ajax.reload();
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    }
+                });
+            }
+        });
 }

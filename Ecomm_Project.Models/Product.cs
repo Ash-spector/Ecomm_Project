@@ -10,7 +10,7 @@ namespace Ecomm_Project.Models
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -29,6 +29,10 @@ namespace Ecomm_Project.Models
 
         [Required]
         [Range(1, 1000)]
+        public double Price { get; set; }
+
+        [Required]
+        [Range(1, 1000)]
         public double Price50 { get; set; }
 
         [Required]
@@ -37,7 +41,7 @@ namespace Ecomm_Project.Models
 
         [Required]
         [Display(Name = "Image Url")]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Required]
         [Display(Name = "Category")] 
