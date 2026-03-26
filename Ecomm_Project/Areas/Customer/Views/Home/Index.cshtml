@@ -1,8 +1,35 @@
 ﻿@model IEnumerable<Ecomm_Project.Models.Product>
-<div class="row">
+
+<!-- Search Bar & Radio Buttons -->
+<div class="row mb-3">
+    <div class="col-md-6 offset-md-3 text-center">
+        <div class="input-group mb-2">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search books..." />
+        </div>
+        <div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="searchFilter" value="all" id="filterAll" checked />
+                <label class="form-check-label" for="filterAll">All</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="searchFilter" value="title" id="filterTitle" />
+                <label class="form-check-label" for="filterTitle">Title</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="searchFilter" value="author" id="filterAuthor" />
+                <label class="form-check-label" for="filterAuthor">Author</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Your Existing Card Layout — just add data attributes -->
+<div class="row" id="bookContainer">
     @foreach (var product in Model)
     {
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-md-6 book-card"
+             data-title="@product.Title.ToLower()"
+             data-author="@product.Author.ToLower()">
             <div class="row p-2">
                 <div class="col-12 p-1" style="border:1px solid #008cba; border-radius: 5px;">
                     <div class="card" style="border:0px;">
@@ -29,3 +56,7 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script src="~/js/home.js"></script>
+}
