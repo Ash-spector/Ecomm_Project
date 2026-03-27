@@ -7,20 +7,35 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Admin/Category/GetAll"
+            "url": "/Admin/Company/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "70%" },
+            { "data": "name", "width": "15%" },
+            { "data": "streetAddress", "width": "20%" },
+            { "data": "city", "width": "15%" },
+            { "data": "state", "width": "10%" },
+            { "data": "phoneNumber", "width": "15%" },
+            {
+                "data": "isAuthorized",
+                "width": "10%",
+                "render": function (data) {
+                    if (data) {
+                        return `<input type="checkbox" checked disabled />`;
+                    } else {
+                        return `<input type="checkbox" disabled />`;
+                    }
+                }
+            },
             {
                 "data": "id",
-                "width": "30%",
+                "width": "15%",
                 "render": function (data) {
                     return `
                     <div class="text-center">
-                        <a href="/Admin/Category/Upsert/${data}" class="btn btn-info">
+                        <a href="/Admin/Company/Upsert/${data}" class="btn btn-info">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a onclick="Delete('/Admin/Category/Delete/${data}')" class="btn btn-danger">
+                        <a onclick="Delete('/Admin/Company/Delete/${data}')" class="btn btn-danger">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>`;

@@ -1,7 +1,6 @@
 ﻿using Ecomm_Project.DataAccess.Repository.IRepository;
 using Ecomm_Project.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Operations;
 
 namespace Ecomm_Project.Areas.Admin.Controllers
 {
@@ -28,7 +27,8 @@ namespace Ecomm_Project.Areas.Admin.Controllers
             {
                 return View(category);
             }
-            //edit
+
+            // Edit
             category = _unitofwork.Category.Get(id.GetValueOrDefault());
 
             if (category == null)
@@ -49,7 +49,8 @@ namespace Ecomm_Project.Areas.Admin.Controllers
                 _unitofwork.Category.Add(category);
             else
                 _unitofwork.Category.Update(category);
-                _unitofwork.Save();
+
+            _unitofwork.Save();  // ✅ Fixed: was inside else block only due to missing braces
 
             return RedirectToAction(nameof(Index));
         }
@@ -59,23 +60,25 @@ namespace Ecomm_Project.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var CategoryList = _unitofwork.Category.GetAll();
-            return Json(new { data = CategoryList });
+            var categoryList = _unitofwork.Category.GetAll();
+            return Json(new { data = categoryList });
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
             var categoryInDb = _unitofwork.Category.Get(id);
+
             if (categoryInDb == null)
                 return Json(new { success = false, message = "Unable to delete data!" });
+
             _unitofwork.Category.Remove(categoryInDb);
             _unitofwork.Save();
-            return Json(new { success = true, message = "Delete successful" });
 
-            return RedirectToAction(nameof(Index));
-        
-        #endregion
+            return Json(new { success = true, message = "Delete successful" });
+            // ✅ Fixed: removed unreachable RedirectToAction + moved #endregion outside
         }
+
+        #endregion  // ✅ Fixed: #endregion is now OUTSIDE the method
     }
 }
