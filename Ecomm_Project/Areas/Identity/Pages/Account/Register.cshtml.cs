@@ -2,14 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
+using Ecomm_Project.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Ecomm_Project.Areas.Identity.Pages.Account
 {
@@ -97,7 +98,22 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            //Add custom Columns hereee
+            [Required]
+            public string Name { get; set; }
+            [Display(Name = "Street Address")]
+            public string StreetAddress { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            [Display(Name = "Postal Code")]
+            public string PostalCode { get; set; }
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+            [Display(Name = "Company Name")]
+            public int? CompanyId { get; set; }
+            public string Role { get; set; }
         }
+
 
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -111,8 +127,21 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
-            {
-                var user = CreateUser();
+            { 
+                //var user = createuser();
+                var user = new ApplicationUser
+                {
+                    Name = Input.Name,
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    PhoneNumber = Input.PhoneNumber,
+                    StreetAddress = Input.StreetAddress,
+                    City = Input.City,
+                    State = Input.State,
+                    PostalCode = Input.PostalCode,
+                    CompanyId = Input.CompanyId,
+                    Role = Input.Role
+                };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

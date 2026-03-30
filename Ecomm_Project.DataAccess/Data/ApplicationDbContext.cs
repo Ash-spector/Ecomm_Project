@@ -10,5 +10,6 @@ namespace Ecomm_Project.DataAccess.Data
         public DbSet<CoverType> CoverTypes { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
