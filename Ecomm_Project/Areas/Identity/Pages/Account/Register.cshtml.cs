@@ -185,7 +185,7 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
                     }
                     //.............
                     //Add Admin role for first role 
-                    await _userManager.AddToRoleAsync(user, SD.Role_Admin);
+                    //await _userManager.AddToRoleAsync(user, SD.Role_Admin);
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
