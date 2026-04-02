@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Ecomm_Project.DataAccess.Repository;
+using Ecomm_Project.DataAccess.Repository.IRepository;
 using Ecomm_Project.Models;
 using Ecomm_Project.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System;
@@ -32,6 +35,8 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
+
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -39,7 +44,10 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-          RoleManager<IdentityRole> roleManager)
+          RoleManager<IdentityRole> roleManager,
+             IUnitOfWork unitOfWork)
+           
+            
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +56,7 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -73,6 +82,8 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        /// //
+        // 
         public class InputModel
         {
             /// <summary>
@@ -116,12 +127,30 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
             [Display(Name = "Company Name")]
             public int? CompanyId { get; set; }
             public string Role { get; set; }
+            //Add Company and roles
+            public IEnumerable<SelectListItem> CompanyList { get; set; }
+            public IEnumerable<SelectListItem> RolesList { get; set; }
         }
+        
 
 
-
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null)   
         {
+            Input = new InputModel()
+            {
+                CompanyList = _unitOfWork.Company.GetAll().Select(cl => new SelectListItem()
+                {
+                    Text = cl.Name,
+                    Value = cl.Id.ToString()
+                }),
+                RolesList = _roleManager.Roles.Where(r=>r.Name != SD.Role_Individual).Select(r=>r.Name).Select(rl=>new SelectListItem()
+                {
+                    Text = rl,
+                    Value = rl
+                })
+
+
+            };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -186,6 +215,21 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
                     //.............
                     //Add Admin role for first role 
                     //await _userManager.AddToRoleAsync(user, SD.Role_Admin);
+                    if(Input.Role == null && Input.CompanyId == null )
+                    {
+                        _userManager.AddToRoleAsync(user,SD.Role_Company);
+                    }
+                    else
+                    {
+                        if (Input.CompanyId > 0)
+                        {
+                            await _userManager.AddToRoleAsync(user, SD.Role_Company);
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, Input.Role);
+                        }
+                    }
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
