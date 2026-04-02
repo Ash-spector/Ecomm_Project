@@ -49,7 +49,9 @@ namespace Ecomm_Project.Areas.Admin.Controllers
                     };
                 }
             }
-            userList.RemoveAll(u => u.Role == SD.Role_Admin);
+            var adminUser = userList.FirstOrDefault(u => u.Role == SD.Role_Admin);
+            if(adminUser !=null )
+                userList.Remove(adminUser);
             return Json(new { data = userList });
         }
         #endregion
