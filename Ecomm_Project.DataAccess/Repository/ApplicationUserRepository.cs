@@ -1,18 +1,16 @@
 ﻿using Ecomm_Project.DataAccess.Data;
 using Ecomm_Project.DataAccess.Repository.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Ecomm_Project.Models;  // ← also make sure this using is present
 
 namespace Ecomm_Project.DataAccess.Repository
 {
-    public class ApplicationUserRepository : Repository<ApplicationUserRepository>,IApplicationUserRepository
+    public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
     {
         private readonly ApplicationDbContext _context;
-        public ApplicationUserRepository (ApplicationDbContext context) : base (context)
-        {
-            context = _context;
-        }
 
+        public ApplicationUserRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;  
+        }
     }
 }

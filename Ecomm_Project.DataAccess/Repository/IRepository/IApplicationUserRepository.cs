@@ -5,7 +5,9 @@ using System.Text;
 
 namespace Ecomm_Project.DataAccess.Repository.IRepository
 {
-    public interface IApplicationUserRepository : IRepository<ApplicationUserRepository>
+    public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
+        
     }
 }
+

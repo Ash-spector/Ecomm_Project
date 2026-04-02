@@ -1,5 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿<div class=" row border p-2 m-2">
+	<div class=" col-9">
+		<h2 class=" text-primary "> User </h2>
+	</div>
+	<div class=" col-3">
+		<a asp-page="/Account/Register" asp-area="Identity" class=" btn btn-info form-control">
+			<i class=" fas fa-plus" ></i> &nbsp; New User 
+		</a>
+	</div>
+</div>
+<div class=" container rounded border" p-2 m-2>
+	<table id=" tblData" class=" table table-bordered table-striped table-active">
+		<thead>
+			<tr>
+				<th> Name </th>
+				<th> Email </th>
+				<th> Phone Number </th>
+				<th> Company Name </th>
+				<th> Role </th>
+				<th style="width: 10%">  </th>
+				</tr>
+		</thead>
+	</table>
+</div>
+@section Scripts{
+	<script src ="~/js/User.js"></script>
 }
