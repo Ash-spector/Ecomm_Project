@@ -40,7 +40,7 @@ function loadDataTable() {
 function Delete(url) {
     swal({
         title: "Want to Delete Data ?",
-        text: "Delete this Covertype?",
+        text: "Delete this Product?",
         icon: "warning",
         buttons: true,
         dangerMode: true

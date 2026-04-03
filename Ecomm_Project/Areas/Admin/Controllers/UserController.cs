@@ -54,6 +54,29 @@ namespace Ecomm_Project.Areas.Admin.Controllers
                 userList.Remove(adminUser);
             return Json(new { data = userList });
         }
+        [HttpPost]
+        public IActionResult LockUnlock([FromBody]string id)
+        {
+            bool isLocked = false;
+            var userInDb = _unitofwork.ApplicationUser.FirstorDefault(u => u.Id == id);
+            if(userInDb == null)
+            {
+                return Json(new { success = false, message = "Something went wrong while lock and unlock user !!" });
+            }
+            if(userInDb != null && userInDb.LockoutEnd > DateTime.Now)
+            {
+                userInDb.LockoutEnd = DateTime.Now;
+                isLocked = false;
+            }
+            else
+            {
+                userInDb.LockoutEnd = DateTime.Now.AddYears(100);
+                isLocked = true;
+            }
+            _context.SaveChanges();
+            return Json(new { success = true, message = isLocked == true ?
+                "User Successfully locked" : "User Successfully Unlocked"});
+        }
         #endregion
     }
 }
