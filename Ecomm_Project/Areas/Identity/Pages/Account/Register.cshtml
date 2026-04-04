@@ -67,7 +67,7 @@
          @if (User.IsInRole(SD.Role_Admin))
                 {
                 <div class="form-floating mb-3">
-                    <select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class=" form-control"> <option value="">Select Role</option> </select>
+                    <select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class=" form-control"> <option value=""> Select Role</option> </select>
                     <label asp-for="Input.Role"></label>
                     <span asp-validation-for="Input.Role" class="text-danger"></span>
                 </div>
