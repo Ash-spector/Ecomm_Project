@@ -1,72 +1,76 @@
-﻿var dataTable;
+﻿var searchHandler;
 
 $(document).ready(function () {
-    loadDataTable();
+    initializeSearch();
 });
 
-function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
-        "ajax": {
-            "url": "/Admin/Company/GetAll"
-        },
-        "columns": [
-            { "data": "name", "width": "15%" },
-            { "data": "streetAddress", "width": "20%" },
-            { "data": "city", "width": "15%" },
-            { "data": "state", "width": "10%" },
-            { "data": "phoneNumber", "width": "15%" },
-            {
-                "data": "isAuthorized",
-                "width": "10%",
-                "render": function (data) {
-                    if (data) {
-                        return `<input type="checkbox" checked disabled />`;
-                    } else {
-                        return `<input type="checkbox" disabled />`;
-                    }
-                }
-            },
-            {
-                "data": "id",
-                "width": "15%",
-                "render": function (data) {
-                    return `
-                    <div class="text-center">
-                        <a href="/Admin/Company/Upsert/${data}" class="btn btn-info">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a onclick="Delete('/Admin/Company/Delete/${data}')" class="btn btn-danger">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>`;
-                }
-            }
-        ]
+function initializeSearch() {
+    // Trigger on typing
+    $('#searchInput').on('keyup', function () {
+        applySearch();
+    });
+
+    // Trigger on radio change
+    $('input[name="searchFilter"]').on('change', function () {
+        applySearch();
     });
 }
+function applySearch() {
 
-function Delete(url) {
-    swal({
-        title: "Want to Delete Data ?",
-        text: "Delete this Company?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: url,
-                    type: "DELETE",
-                    success: function (data) {
-                        if (data.success) {
-                            toastr.success(data.message);
-                            datatable.ajax.reload();
-                        } else {
-                            toastr.error(data.message);
-                        }
-                    }
-                });
-            }
+    let searchText = $('#searchInput').val().toLowerCase();
+    let filter = $('input[name="searchFilter"]:checked').val();
+
+    let visibleCount = 0;
+
+    $('.book-card').each(function () {
+
+        let title = $(this).data('title');
+        let author = $(this).data('author');
+
+        let match = false;
+
+        if (filter === "all") {
+            match = title.includes(searchText) || author.includes(searchText);
+        }
+        else if (filter === "title") {
+            match = title.includes(searchText);
+        }
+        else if (filter === "author") {
+            match = author.includes(searchText);
+        }
+
+        if (match) {
+            $(this).show();
+            visibleCount++;
+        } else {
+            $(this).hide();
+        }
+
+    });
+
+    showSearchMessage(searchText, visibleCount);
+}
+function showSearchMessage(searchText, count) {
+
+    if (searchText === "") return;
+
+    if (count === 0) {
+        toastr.warning("No books found!");
+    } else {
+        // optional success message
+        console.log(count + " results found");
+    }
+}
+function showSearchMessage(searchText, count) {
+
+    if (searchText === "") return;
+
+    if (count === 0) {
+        swal({
+            title: "No Results",
+            text: "No books found for your search",
+            icon: "warning",
+            button: "OK"
         });
+    }
 }

@@ -22,6 +22,7 @@ namespace Ecomm_Project.Areas.Customer.Views
             return View(productList);
         }
 
+
         public IActionResult Details(int id)
         {
             var product = _unitOfWork.Product.Get(id);

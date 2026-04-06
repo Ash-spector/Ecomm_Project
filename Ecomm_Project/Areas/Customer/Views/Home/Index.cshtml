@@ -3,54 +3,83 @@
 <!-- Search Bar & Radio Buttons -->
 <div class="row mb-3">
     <div class="col-md-6 offset-md-3 text-center">
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 p-2">
             <input type="text" id="searchInput" class="form-control" placeholder="Search books..." />
+            <button class="btn btn-primary" onclick="searchBooks()">
+               
+                <i class="fas fa-search"></i>
+            </button>
         </div>
+
         <div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="searchFilter" value="all" id="filterAll" checked />
-                <label class="form-check-label" for="filterAll">All</label>
+                <input class="form-check-input" type="radio" name="searchFilter" value="all" checked />
+                <label class="form-check-label">All</label>
             </div>
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="searchFilter" value="title" id="filterTitle" />
-                <label class="form-check-label" for="filterTitle">Title</label>
+                <input class="form-check-input" type="radio" name="searchFilter" value="title" />
+                <label class="form-check-label">Title</label>
             </div>
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="searchFilter" value="author" id="filterAuthor" />
-                <label class="form-check-label" for="filterAuthor">Author</label>
+                <input class="form-check-input" type="radio" name="searchFilter" value="author" />
+                <label class="form-check-label">Author</label>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Your Existing Card Layout — just add data attributes -->
+<!-- Book Cards -->
 <div class="row" id="bookContainer">
     @foreach (var product in Model)
     {
         <div class="col-lg-3 col-md-6 book-card"
              data-title="@product.Title.ToLower()"
              data-author="@product.Author.ToLower()">
+
             <div class="row p-2">
                 <div class="col-12 p-1" style="border:1px solid #008cba; border-radius: 5px;">
                     <div class="card" style="border:0px;">
+
                         @if (product.ImageUrl != null)
                         {
                             <img src="@product.ImageUrl" class="card-img-top rounded" />
                         }
+
                         <div class="pl-1">
-                            <p class="card-title h5"><b style="color:#2c3e50">@product.Title</b></p>
-                            <p class="card-title text-primary">by <b>@product.Author</b></p>
+                            <p class="card-title h5">
+                                <b style="color:#2c3e50">@product.Title</b>
+                            </p>
+                            <p class="card-title text-primary">
+                                by <b>@product.Author</b>
+                            </p>
                         </div>
+
                         <div style="padding-left:5px;">
-                            <p>List Price: <strike><b>$@product.ListPrice.ToString("0.00")</b></strike></p>
+                            <p>
+                                List Price:
+                                <strike><b>$@product.ListPrice.ToString("0.00")</b></strike>
+                            </p>
                         </div>
+
                         <div style="padding-left:5px;">
-                            <p style="color:maroon">As low as: <b>$@product.Price100.ToString("0.00")</b></p>
+                            <p style="color:maroon">
+                                As low as:
+                                <b>$@product.Price100.ToString("0.00")</b>
+                            </p>
                         </div>
+
                     </div>
+
                     <div>
-                        <a asp-action="Details" class="btn btn-primary form-control" asp-route-id="@product.Id">Details</a>
+                        <a asp-action="Details"
+                               class="btn btn-primary form-control"
+                               asp-route-id="@product.Id">
+                            Details
+                        </a>
                     </div>
+
                 </div>
             </div>
         </div>

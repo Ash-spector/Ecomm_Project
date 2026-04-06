@@ -143,7 +143,9 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
                     Text = cl.Name,
                     Value = cl.Id.ToString()
                 }),
-                RolesList = _roleManager.Roles.Where(r=>r.Name != SD.Role_Individual).Select(r=>r.Name).Select(rl=>new SelectListItem()
+                RolesList = _roleManager.Roles
+                .Where(r=>r.Name != SD.Role_Individual)
+                .Select(r=>r.Name).Select(rl=>new SelectListItem()
                 {
                     Text = rl,
                     Value = rl
@@ -212,12 +214,13 @@ namespace Ecomm_Project.Areas.Identity.Pages.Account
                     {
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Company));
                     }
+                    
                     //.............
                     //Add Admin role for first role 
                     //await _userManager.AddToRoleAsync(user, SD.Role_Admin);
-                    if(Input.Role == null && Input.CompanyId == null )
+                    if (Input.Role == null && Input.CompanyId == null )
                     {
-                        _userManager.AddToRoleAsync(user,SD.Role_Company);
+                        await _userManager.AddToRoleAsync(user,SD.Role_Company);
                     }
                     else
                     {
