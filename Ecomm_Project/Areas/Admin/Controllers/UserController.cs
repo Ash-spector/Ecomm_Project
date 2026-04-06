@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ecomm_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = SD.Role_Admin)]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
