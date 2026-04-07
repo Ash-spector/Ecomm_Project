@@ -1,35 +1,33 @@
 ﻿@model IEnumerable<Ecomm_Project.Models.Product>
 
 <!-- Search Bar & Radio Buttons -->
-<div class="row mb-3">
-    <div class="col-md-6 offset-md-3 text-center">
-        <div class="input-group mb-2 p-2">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search books..." />
+<div class="row mb-4">
+    <div class="col-md-8 offset-md-2">
+
+        <div class="input-group">
+            <select id="searchFilter" class="form-select" style="max-width:140px;">
+                <option value="all">All</option>
+                <option value="title">Books</option>
+                <option value="author">Authors</option>
+            </select>
+
+            <!-- 🔍 Search Input -->
+            <input type="text"
+                   id="searchInput"
+                   class="form-control"
+                   placeholder="Search books..." />
             <button class="btn btn-primary" onclick="searchBooks()">
-               
-                <i class="fas fa-search"></i>
+               <i class=" fas fa-search"></i>
             </button>
+
         </div>
 
-        <div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="searchFilter" value="all" checked />
-                <label class="form-check-label">All</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="searchFilter" value="title" />
-                <label class="form-check-label">Title</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="searchFilter" value="author" />
-                <label class="form-check-label">Author</label>
-            </div>
-        </div>
     </div>
 </div>
-
+<!-- 🔥 No Result Message -->
+<div id="noResultMessage" class="text-center text-danger mb-3" style="display:none;">
+    <h5>No books found</h5>
+</div>
 <!-- Book Cards -->
 <div class="row" id="bookContainer">
     @foreach (var product in Model)

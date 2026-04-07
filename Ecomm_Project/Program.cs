@@ -33,7 +33,17 @@ builder.Services.ConfigureApplicationCookie(options =>
 //builder.Services.AddScoped<ICoverTypeRepository, ICoverTypeRepository>();
 // iske upr add krte hain 
 //iske niche middleware udhr code ni add krna 
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+  options.AppId = "1465213865062105";
+options.AppSecret = "807a920a6018c56ec2fa4d4ceb030180";
 
+});
+//builder.Services.AddAuthentication().AddGoogle(options =>
+//{
+//    options.ClientId = " ";
+//    options.ClientSecret = "";
+//});
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 var app = builder.Build();

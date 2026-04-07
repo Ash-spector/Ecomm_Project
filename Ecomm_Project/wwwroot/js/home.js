@@ -1,10 +1,11 @@
 ﻿function searchBooks() {
 
-    let text = document.getElementById("searchInput").value.toLowerCase();
-    let filter = document.querySelector('input[name="searchFilter"]:checked').value;
+    let text = document.getElementById("searchInput").value.toLowerCase().trim();
+    let filter = document.getElementById("searchFilter").value;
 
     let cards = document.querySelectorAll(".book-card");
     let container = document.getElementById("bookContainer");
+    let message = document.getElementById("noResultMessage");
 
     let matched = [];
 
@@ -42,7 +43,10 @@
         container.prepend(card);
     });
 
+    // 🔥 Show / Hide message
     if (matched.length === 0 && text !== "") {
-        alert("No books found");
+        message.style.display = "block";
+    } else {
+        message.style.display = "none";
     }
 }

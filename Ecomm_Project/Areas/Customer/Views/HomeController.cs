@@ -47,6 +47,7 @@ namespace Ecomm_Project.Areas.Customer.Views
             var productList = _unitOfWork.Product.GetAll(includeProperties: "Category");  // ← Fixed casing
             return Json(new { data = productList });
         }
+
         #endregion
     }
 }
